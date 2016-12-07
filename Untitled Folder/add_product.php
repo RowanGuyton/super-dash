@@ -1,4 +1,17 @@
 <!DOCTYPE html>
+<?php
+    $username = "root";
+    $password = ""; // Put your password in the quotations
+    $host = "127.0.0.1";
+    $db = "superdash";
+    $connection = mysqli_connect($host, $username, $password, $db);
+
+    if (mysqli_connect_error()){
+        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+    } else {
+        echo "<p>Connected to server: " . $host . "</p>";
+    }
+?>
 <html lang="en">
 
 <head>
@@ -32,33 +45,29 @@
 
     <!-- Sidebar -->
     <div id="sidebar-wrapper">
-        <ul class="sidebar-nav">
+        <ul class="sidebar-nav text-center">
             <li class="sidebar-brand">
-                <a href="#">
-                    Start Bootstrap
+                <a href="index.php">
+                    Dashboard
                 </a>
             </li>
+
             <li>
-                <a href="#">Dashboard</a>
+                <a href="all_products.php">View All Products</a>
             </li>
             <li>
-                <a href="#">Shortcuts</a>
+                <a href="add_product.html">Add New Product</a>
             </li>
             <li>
-                <a href="#">Overview</a>
+                <a href="view_product.php">Update Product</a>
             </li>
             <li>
-                <a href="#">Events</a>
+                <a href="#">Search Products</a>
             </li>
             <li>
-                <a href="#">About</a>
+                <a href="#">Delete Product</a>
             </li>
-            <li>
-                <a href="#">Services</a>
-            </li>
-            <li>
-                <a href="#">Contact</a>
-            </li>
+
         </ul>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -76,7 +85,7 @@
             </div>
 
             <div class="row text-center">
-                <form class="form-horizontal" action="?">
+                <form class="form-horizontal" action="?" method="post">
                     <fieldset>
 
                         <!-- Form Name -->
@@ -84,8 +93,8 @@
 
                         <!-- Text input-->
                         <div class="form-group">
-                            <label class="col-md-4 control-label" for="textinput">Product Name</label>
-                            <div class="col-md-4">
+                            <label class="col-md-6 control-label" for="textinput">Product Name</label>
+                            <div class="col-md-6">
                                 <input id="textinput" name="textinput" type="text" placeholder="Enter a product name" class="form-control input-md" required="">
 
                             </div>
@@ -96,14 +105,37 @@
                             <label class="col-md-4 control-label" for="selectbasic">Product Category</label>
                             <div class="col-md-4">
                                 <select id="selectbasic" name="selectbasic" class="form-control">
-                                    <option value="1">Shoes</option>
-                                    <option value="2">Shirts</option>
-                                    <option value="3">Jeans</option>
-                                    <option value="4">Dresses</option>
-                                    <option value="5">Jumpers</option>
-                                    <option value="6">Accessories</option>
+                                    <option value="shoes">Shoes</option>
+                                    <option value="shirts">Shirts</option>
+                                    <option value="jeans">Jeans</option>
+                                    <option value="dresses">Dresses</option>
+                                    <option value="jumpers">Jumpers</option>
+                                    <option value="accessories">Accessories</option>
+                                    <option value="sunglasses">Sunglasses</option>
+                                    <option value="underwear">Underwear</option>
                                 </select>
                             </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="productprice">
+                                Product Price:
+                            </label>
+                            <input type="number" min="0" step="any" name="productprice" id="productprice">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="productcostprice">
+                                Product Cost Price:
+                            </label>
+                            <input type="number" min="0" step="any" name="productcostprice" id="productcostprice">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="stock">
+                                Stock:
+                            </label>
+                            <input type="number" min="0" step="1" name="stock" id="stock">
                         </div>
 
                         <!-- Textarea -->
@@ -132,12 +164,31 @@
 
                     </fieldset>
                 </form>
+                <?php
+                    if (isset($_POST["singlebutton"])) {
+                        if ((!empty($_POST["textinput"])) && (!empty($_POST["textarea"])) && (!empty($_POST["productprice"])) && (!empty($_POST["productcostprice"])) && (!empty($_POST["stock"])) && (!empty($_POST["selectbasic"]))) {
 
+                            $name = $_POST["textinput"];
+                            $description = $_POST["textarea"];
+                            $price = $_POST["productprice"];
+                            $costPrice = $_POST["productcostprice"];
+                            $stock = $_POST["stock"];
+                            $category = $_POST["selectbasic"];
 
+                            $sql = "INSERT INTO products (name, description, price, cost_price, stock, category) VALUES ('$name', '$description', '$price', '$costPrice', '$stock', '$category')";
 
+                            $result = mysqli_query($connection, $sql);
+
+                            if ($result) {
+                                echo "Item successfully added to inventory.";
+                            } else {
+                                echo 'Invalid query: ' . mysqli_error($connection) . "\n";
+                                echo 'Whole query: ' . $sql;
+                            }
+                        }
+                    }
+                ?>
             </div>
-
-
 
             <div class="row">
                 <div class="col-lg-12">
