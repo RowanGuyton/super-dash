@@ -11,13 +11,14 @@ if (mysqli_connect_error()){
     echo "<p>Connected to server: ".$host."</p>";
 
 }
-//$name=$_GET["name"];
-//$description=$_GET["description"];
-//$price=$_GET["price"];
-//$costPrice=$_GET["costprice"];
-//$stock=$_GET["stock"];
-//$ean=$_GET["ean"];
-$sql="SELECT * FROM products WHERE id='".$_GET["id"]."'";
+
+if(isset($_GET["id"]) && isset($_GET["name"]) && isset($_GET["description"]) && isset($_GET["price"])) {
+    $id = $_GET["id"];
+    $name = $_GET["name"];
+    $description = $_GET["description"];
+    $price = $_GET["price"];
+}
+
 ?>
 <html lang="en">
 
@@ -73,33 +74,58 @@ $sql="SELECT * FROM products WHERE id='".$_GET["id"]."'";
             </li>
 
         </ul>
+        </div>
         <div id="page-content-wrapper">
             <div class="container-fluid">
-                <?php
-                $result=mysqli_query($connection, $sql);
-                if ($result) {
-                    while ($row = mysqli_fetch_array($result, MYSQLI_BOTH)) {
-                        $name=$row[1];
-                        $description=$row[2];
-                        //$price=$_GET["price"];
-                        //$costPrice=$_GET["costprice"];
-                        //$stock=$_GET["stock"];
-                        //$ean=$_GET["ean"];
-                        echo "<div class=\"col-xs-12\">
-                                
-                            </div>
-                            <div class=\"col-xs-12\">
-                                <p>".$description."</p>
-                            </div>";
-                    }
-                } else {
-                    echo 'Invalid query: ' . mysqli_error($connection) . "\n";
-                    echo 'Whole query: ' . $sql;
-                }
-                ?>
-            </>
+                <div class="col-xs-12 text-center">
+                    <h1 class="page-header">
+                        <?php
+                            echo "$name"
+                        ?>
+                    </h1>
+                    </div>
+                    <?php
+                    if (isset($_GET["mode"])) {
+                        $sql="DELETE FROM products WHERE id='$id'";
+                        $result = mysqli_query($connection, $sql);
+                        if ($result) {
+                            echo "Item successfully removed from inventory.";
+                        } else {
+                            echo 'Invalid query: ' . mysqli_error($connection) . "\n";
+                            echo 'Whole query: ' . $sql;
+                        }
+                    } else {
+                        echo "<div class='row text-center'>
+                                <div class=\"col-md-8 col-xs-12\">
+                                    <img class='img-responsive' src=\"http://placehold.it/960x480?text=Product+Image\">
+                                </div>
+                                <div class=\"col-md-4 col-xs-12\">
+                                    <div class='well'>
+                                        <p>" . $id . "</p>
+                                        <p>" . $name . "</p>
+                                        <p>" . $description . "</p>
+                                        <p>" . $price . "</p>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class='row text-center'>
+                                    <div class='col-md-3 col-md-offset-8'>
+                                        <a href='update_product.php' class='btn btn-primary btn-lg btn-block' id='update' name='update'>Update</a>
+                                    </div>
+                                    <div class='col-md-3'>
+                                        <form action=\"?\" method=\"post\">
+                                            <fieldset>
+                                                <div class='form-group'>
+                                                    <a href=\"view_product.php?id=$id&name=$name&description=$description&price=$price&mode=delete\" class='btn btn-primary btn-lg btn-block' id='delete' name='delete'>Delete</a>
+                                                </div>        
+                                            </fieldset>        
+                                        </form>
+                                    </div>
+                                </div>";
+                        }
+                    ?>
         </div>
-        </div>
+
     </div>
 </body>
 </html>
