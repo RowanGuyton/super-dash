@@ -1,16 +1,6 @@
 <!DOCTYPE html>
 <?php
-$username = "root";
-$password = "";
-$host = "127.0.0.1";
-$db = "superdash";
-$connection = mysqli_connect($host, $username, $password, $db);
-if (mysqli_connect_error()){
-    echo "Failed to connect to MySQL: " . mysqli_connect_error();
-} else {
-    echo "<p>Connected to server: ".$host."</p>";
-
-}
+include("connection.php");
 
 if(isset($_GET["id"]) && isset($_GET["name"]) && isset($_GET["description"]) && isset($_GET["price"]) && isset($_GET["stock"])) {
     $id = $_GET["id"];

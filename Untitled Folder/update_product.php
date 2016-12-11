@@ -1,32 +1,11 @@
 <!DOCTYPE html>
 <?php
-$username = "root";
-$password = ""; // Put your password in the quotations
-$host = "127.0.0.1";
-$db = "superdash"; // In our case the database name is the same as
-// the username (normally it is different) so we
-// can set it as the same as the username
-$connection = mysqli_connect($host, $username, $password, $db);
-if (mysqli_connect_error()) { // If connection error
-    // Display error message and stop the script, we can't do any
-    // database work as there is no connection to use
-    echo "Failed to connect to MySQL: " . mysqli_connect_error();
-} else {
-    echo "<p>Connected to server: " . $host . "</p>";
-    // You would add code here to use the database (add, edit,
-    // retrieve data etc.)
-    // After all work with the database is complete disconnect the
-    // database connection (we are finished with the database)
-}
+include("connection.php");
 if (isset($_GET["id"]) && isset($_GET["name"]) && isset($_GET["description"]) && isset($_GET["price"]) && isset($_GET["stock"])) {
-
     $oldName = $_GET["name"];
     $oldDescription = $_GET["description"];
     $oldPrice = $_GET["price"];
     $oldStock = $_GET["stock"];
-
-
-
 }
 ?>
 <html lang="en">
@@ -228,5 +207,21 @@ if (isset($_GET["id"]) && isset($_GET["name"]) && isset($_GET["description"]) &&
         </div>
     </div>
 </div>
+
+<!-- /#wrapper -->
+
+<!-- jQuery -->
+<script src="js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="js/bootstrap.min.js"></script>
+
+<!-- Menu Toggle Script -->
+<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
 </body>
 </html>

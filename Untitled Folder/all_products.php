@@ -1,19 +1,6 @@
 <!DOCTYPE html>
 <?php
-$username = "root";
-$password = ""; // Put your password in the quotations
-$host = "127.0.0.1";
-$db = "superdash"; // In our case the database name is the same as
-// the username (normally it is different) so we
-// can set it as the same as the username
-$connection = mysqli_connect($host, $username, $password, $db);
-if (mysqli_connect_error()){ // If connection error
-    // Display error message and stop the script, we can't do any
-    // database work as there is no connection to use
-    echo "Failed to connect to MySQL: " . mysqli_connect_error();
-} else {
-    echo "<p>Connected to server: ".$host."</p>";
-}
+include("connection.php");
 ?>
 <html lang="en">
 
