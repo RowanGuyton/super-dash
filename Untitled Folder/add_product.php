@@ -56,18 +56,8 @@
                 <a href="all_products.php">View All Products</a>
             </li>
             <li>
-                <a href="add_product.html">Add New Product</a>
+                <a href="add_product.php">Add New Product</a>
             </li>
-            <li>
-                <a href="view_product.php">Update Product</a>
-            </li>
-            <li>
-                <a href="#">Search Products</a>
-            </li>
-            <li>
-                <a href="#">Delete Product</a>
-            </li>
-
         </ul>
     </div>
     <!-- /#sidebar-wrapper -->

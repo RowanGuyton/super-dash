@@ -12,11 +12,12 @@ if (mysqli_connect_error()){
 
 }
 
-if(isset($_GET["id"]) && isset($_GET["name"]) && isset($_GET["description"]) && isset($_GET["price"])) {
+if(isset($_GET["id"]) && isset($_GET["name"]) && isset($_GET["description"]) && isset($_GET["price"]) && isset($_GET["stock"])) {
     $id = $_GET["id"];
     $name = $_GET["name"];
     $description = $_GET["description"];
     $price = $_GET["price"];
+    $stock = $_GET["stock"];
 }
 
 ?>
@@ -63,16 +64,6 @@ if(isset($_GET["id"]) && isset($_GET["name"]) && isset($_GET["description"]) && 
             <li>
                 <a href="add_product.php">Add New Product</a>
             </li>
-            <li>
-                <a href="view_product.php">Update Product</a>
-            </li>
-            <li>
-                <a href="#">Search Products</a>
-            </li>
-            <li>
-                <a href="#">Delete Product</a>
-            </li>
-
         </ul>
         </div>
         <div id="page-content-wrapper">
@@ -80,12 +71,14 @@ if(isset($_GET["id"]) && isset($_GET["name"]) && isset($_GET["description"]) && 
                 <div class="col-xs-12 text-center">
                     <h1 class="page-header">
                         <?php
+                            $name=$_GET["name"];
                             echo "$name"
                         ?>
                     </h1>
                     </div>
                     <?php
                     if (isset($_GET["mode"])) {
+                        $id=$_GET["id"];
                         $sql="DELETE FROM products WHERE id='$id'";
                         $result = mysqli_query($connection, $sql);
                         if ($result) {
@@ -97,7 +90,7 @@ if(isset($_GET["id"]) && isset($_GET["name"]) && isset($_GET["description"]) && 
                     } else {
                         echo "<div class='row text-center'>
                                 <div class=\"col-md-8 col-xs-12\">
-                                    <img class='img-responsive' src=\"http://placehold.it/960x480?text=Product+Image\">
+                                    <img class='img-responsive' src=\"http://placehold.it/1200x480?text=Product+Image\">
                                 </div>
                                 <div class=\"col-md-4 col-xs-12\">
                                     <div class='well'>
@@ -105,12 +98,13 @@ if(isset($_GET["id"]) && isset($_GET["name"]) && isset($_GET["description"]) && 
                                         <p>" . $name . "</p>
                                         <p>" . $description . "</p>
                                         <p>" . $price . "</p>
+                                        <p>" . $stock . " in stock.</p>
                                     </div>
                                 </div>
                                 </div>
                                 <div class='row text-center'>
                                     <div class='col-md-3 col-md-offset-8'>
-                                        <a href='update_product.php' class='btn btn-primary btn-lg btn-block' id='update' name='update'>Update</a>
+                                        <a href='update_product.php?id=$id&name=$name&description=$description&price=$price&stock=$stock' class='btn btn-primary btn-lg btn-block' id='update' name='update'>Update</a>
                                     </div>
                                     <div class='col-md-3'>
                                         <form action=\"?\" method=\"post\">
