@@ -75,7 +75,8 @@ include("connection.php");
                         <div class="form-group">
                             <label class="col-md-6 control-label" for="textinput">Product Name</label>
                             <div class="col-md-6">
-                                <input id="textinput" name="textinput" type="text" placeholder="Enter a product name" class="form-control input-md" required="">
+                                <input id="textinput" name="textinput" type="text" placeholder="Enter a product name"
+                                       class="form-control input-md" required="">
 
                             </div>
                         </div>
@@ -84,15 +85,18 @@ include("connection.php");
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="selectbasic">Product Category</label>
                             <div class="col-md-4">
-                                <select id="selectbasic" name="selectbasic" class="form-control">
-                                    <option value="shoes">Shoes</option>
-                                    <option value="shirts">Shirts</option>
-                                    <option value="jeans">Jeans</option>
-                                    <option value="dresses">Dresses</option>
-                                    <option value="jumpers">Jumpers</option>
+                                <select id="selectbasic" name="selectbasic" class="form-control" required="">
                                     <option value="accessories">Accessories</option>
+                                    <option value="dresses">Dresses</option>
+                                    <option value="jackets">Jackets</option>
+                                    <option value="jeans">Jeans</option>
+                                    <option value="jumpers">Jumpers</option>
+                                    <option value="shirts">Shirts</option>
+                                    <option value="shoes">Shoes</option>
                                     <option value="sunglasses">Sunglasses</option>
+                                    <option value="t-shirts">T-Shirts</option>
                                     <option value="underwear">Underwear</option>
+                                    <option value="watches">Watches</option>
                                 </select>
                             </div>
                         </div>
@@ -101,28 +105,30 @@ include("connection.php");
                             <label for="productprice">
                                 Product Price:
                             </label>
-                            <input type="number" min="0" step="any" name="productprice" id="productprice">
+                            <input type="number" min="0" step="any" name="productprice" id="productprice" required="">
                         </div>
 
                         <div class="col-md-4">
                             <label for="productcostprice">
                                 Product Cost Price:
                             </label>
-                            <input type="number" min="0" step="any" name="productcostprice" id="productcostprice">
+                            <input type="number" min="0" step="any" name="productcostprice" id="productcostprice"
+                                   required="">
                         </div>
 
                         <div class="col-md-4">
                             <label for="stock">
                                 Stock:
                             </label>
-                            <input type="number" min="0" step="1" name="stock" id="stock">
+                            <input type="number" min="0" step="1" name="stock" id="stock" required="">
                         </div>
 
                         <!-- Textarea -->
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="textarea">Product Description</label>
                             <div class="col-md-4">
-                                <textarea class="form-control" id="textarea" name="textarea">Enter a description here</textarea>
+                                <textarea class="form-control" id="textarea"
+                                          name="textarea">Enter a description here</textarea>
                             </div>
                         </div>
 
@@ -130,7 +136,7 @@ include("connection.php");
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="filebutton">Upload An Image</label>
                             <div class="col-md-4">
-                                <input id="filebutton" name="filebutton" class="input-file" type="file">
+                                <input id="filebutton" name="filebutton" class="input-file" type="file" readonly>
                             </div>
                         </div>
 
@@ -145,35 +151,17 @@ include("connection.php");
                     </fieldset>
                 </form>
                 <?php
-                    if (isset($_POST["singlebutton"])) {
-                        if ((!empty($_POST["textinput"])) && (!empty($_POST["textarea"])) && (!empty($_POST["productprice"])) && (!empty($_POST["productcostprice"])) && (!empty($_POST["stock"])) && (!empty($_POST["selectbasic"]))) {
-
-                            $name = $_POST["textinput"];
-                            $description = $_POST["textarea"];
-                            $price = $_POST["productprice"];
-                            $costPrice = $_POST["productcostprice"];
-                            $stock = $_POST["stock"];
-                            $category = $_POST["selectbasic"];
-
-                            $sql = "INSERT INTO products (name, description, price, cost_price, stock, category) VALUES ('$name', '$description', '$price', '$costPrice', '$stock', '$category')";
-
-                            $result = mysqli_query($connection, $sql);
-
-                            if ($result) {
-                                echo "Item successfully added to inventory.";
-                            } else {
-                                echo 'Invalid query: ' . mysqli_error($connection) . "\n";
-                                echo 'Whole query: ' . $sql;
-                            }
-                        }
-                    }
+                include("insert-product.php");
                 ?>
             </div>
 
             <div class="row">
                 <div class="col-lg-12">
                     <h1>Simple Sidebar</h1>
-                    <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
+                    <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller
+                        screens, and will appear non-collapsed on larger screens. When toggled using the button below,
+                        the menu will appear/disappear. On small screens, the page content will be pushed off
+                        canvas.</p>
                     <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
                     <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
                 </div>
@@ -193,7 +181,7 @@ include("connection.php");
 
 <!-- Menu Toggle Script -->
 <script>
-    $("#menu-toggle").click(function(e) {
+    $("#menu-toggle").click(function (e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
     });

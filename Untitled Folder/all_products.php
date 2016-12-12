@@ -61,64 +61,27 @@ include("connection.php");
                 <form class="form-horizontal" action="?" method="post">
                     <div class="form-group">
 
-                            <label class="col-md-3 control-label" for="textinput">Search</label>
-                            <div class="col-md-6">
-                                <input id="textinput" name="textinput" type="text" placeholder="Search For a Product HEre" class="form-control input-md" required="">
+                        <label class="col-md-3 control-label" for="textinput">Search</label>
+                        <div class="col-md-6">
+                            <input id="textinput" name="textinput" type="text" placeholder="Search For a Product Here"
+                                   class="form-control input-md" required="">
 
-                            </div>
+                        </div>
 
                         <div class="col-md-3">
                             <label class="control-label" for="singlebutton"></label>
                             <button id="singlebutton" name="singlebutton" class="btn btn-primary">Submit</button>
                         </div>
                     </div>
-                    </form>
-                </div>
-            <?php
-            if (isset($_POST["singlebutton"])) {
-                if (!empty($_POST["textinput"])) {
-                    $search=$_POST["textinput"];
-                    $sql="SELECT * FROM products WHERE category LIKE LOWER('%$search%') or name LIKE LOWER('%$search%') ";
-                }
-            } else {
-                $sql = "SELECT * FROM products";
-            }
-
-
-            $result=mysqli_query($connection, $sql);
-
-            if ($result) {
-                while ($row = mysqli_fetch_array($result, MYSQLI_BOTH)) {
-                    $id=$row[0];
-                    $name=$row[1];
-                    $desc=$row[2];
-                    $price=$row[3];
-                    $stock=$row[5];
-                    echo "<div class=\"col-xs-6 col-lg-3 text-center\">
-                            <div class=\"panel panel-default\">
-                            <div class=\"panel-heading\" id=\"id\">
-                                ".$row[0]."
-                            </div>
-                            <div class=\"panel-body\">
-                            <a href=\"view_product.php?id=$id&name=$name&description=$desc&price=$price&stock=$stock\"><p id='name'>".$row[1]."</p></a>
-                            <p id='description'>".$row[2]."</p>
-                            <p>Currently <b>".$row[5]."</b> in stock.</p>
-                            </div>
-                            <div class=\"panel-footer\">
-                                <b><p>".$row[3]."</p></b>
-                            </div>
-                            </div>
-                            </div>";
-                }
-            } else {
-                echo 'Invalid query: ' . mysqli_error($connection) . "\n";
-                echo 'Whole query: ' . $sql;
-            }
-            ?>
+                </form>
             </div>
+            <?php
+            include("display-products.php");
+            ?>
         </div>
     </div>
-    <!-- /#page-content-wrapper -->
+</div>
+<!-- /#page-content-wrapper -->
 
 
 </body>
